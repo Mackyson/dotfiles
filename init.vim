@@ -48,7 +48,6 @@ Plug 'prettier/vim-prettier', {
 
 Plug 'airblade/vim-gitgutter'
 "更新箇所に+や-がつく
-"うごきません
 
 Plug 'rhysd/accelerated-jk'
 nmap j <Plug>(accelerated_jk_gj)
@@ -103,3 +102,12 @@ augroup vimrcEx
   \ exe "normal g`\"" | endif
 augroup END
 "最後にカーソルがあった場所から開始する
+
+
+nnoremap あ a
+nnoremap い i
+nnoremap お o
+nnoremap っｄ dd
+nnoremap ：ｗ :w
+nnoremap ：ｑ :q
+nnoremap ：ｑ！ :q!
