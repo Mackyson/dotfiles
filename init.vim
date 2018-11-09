@@ -38,6 +38,7 @@ set statusline+=%{fugitive#statusline()}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
+let g:deoplete#enable_at_startup=1
 "コード補完
 
 Plug 'prettier/vim-prettier', {
@@ -96,3 +97,9 @@ autocmd BufReadPost * :NERDTree
 
 autocmd QuitPre * :qall
 ":qでNERDTreeも一緒に消す(かなり強引)
+
+augroup vimrcEx
+  au BufRead * if line("'\"") > 0 && line("'\"") <= line("$") |
+  \ exe "normal g`\"" | endif
+augroup END
+"最後にカーソルがあった場所から開始する
