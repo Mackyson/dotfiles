@@ -1,5 +1,3 @@
-"set this at ~/.config/nvim/
-
 if has('vim_starting')
 	set rtp+=~/.vim/plugged/vim-plug
 	if !isdirectory(expand('~/.vim/plugged/vim-plug'))
@@ -41,10 +39,29 @@ Plug 'Shougo/neosnippet-snippets'
 let g:deoplete#enable_at_startup=1
 "コード補完
 
+Plug 'lervag/vimtex'
+Plug 'poppyschmo/deoplete-latex'
+"texの補完
+
+Plug 'fatih/vim-go'
+Plug 'zchee/deoplete-go'
+"GoをIDEに
+
+Plug 'rust-lang/rust.vim'
+Plug 'sebastianmarkow/deoplete-rust'
+"Rustの補完
+
 Plug 'prettier/vim-prettier', {
 	\'do': 'yarn install',
 	\'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']}
 "JS用のコード整形
+
+Plug 'elzr/vim-json'
+"jsonを見やすくする
+
+Plug 'alvan/vim-closetag'
+let g:closetag_filenames = '*.html,*.vue'
+"閉じるタグを自動入力してくれる
 
 Plug 'airblade/vim-gitgutter'
 "更新箇所に+や-がつく
@@ -67,19 +84,24 @@ set autoread
 
 set background=light
 colorscheme darkblue
+highlight Normal ctermbg=NONE guibg=NONE
+highlight NonText ctermbg=NONE guibg=NONE
+highlight SpecialKey ctermbg=NONE guibg=NONE
+highlight EndOfBuffer ctermbg=NONE guibg=NONE
 "配色をオタクに
-
-set whichwrap=b,s,h,l,<,>,[,]
-"カーソル移動を直感的に
 
 set virtualedit=onemore
 "行末の1文字先までカーソルを移動できるように
 
+set scrolloff=12
+"7行余裕を持ってスクロールするように
+
 set nobackup
 set noswapfile
-"こいつらは邪魔なので
+"こいつらは邪魔
 
 set cursorline
+highlight CursorLine term=reverse cterm=none ctermbg=black
 "現在の行を強調
 
 nmap<Esc><Esc> :nohlsearch<CR><Esc>
@@ -88,21 +110,25 @@ nmap<Esc><Esc> :nohlsearch<CR><Esc>
 set list listchars=tab:\.\.
 "インデントを可視化，プラグインが動かなかったときにアンコメントしてね
 
+let g:tex_conceal=''
+"TeXの数式が自動でアレするのを防ぐ
+
 autocmd BufWritePre * :FixWhitespace
 "保存時に空白を削除
 
 autocmd BufReadPost * :NERDTree
 "起動時にNERDTreeを自動で開く
 
-autocmd QuitPre * :qall
-":qでNERDTreeも一緒に消す(かなり強引)
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+":qでNERDTreeも一緒に消す
 
-augroup vimrcEx
-  au BufRead * if line("'\"") > 0 && line("'\"") <= line("$") |
-  \ exe "normal g`\"" | endif
-augroup END
-"最後にカーソルがあった場所から開始する
-
+if argc() == 0 || argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
+		autocmd vimenter * NERDTree
+else
+		autocmd vimenter * NERDTree | wincmd p
+	endif
+"起動時にファイルの方にフォーカスをする，ただしディレクトリを開いたときはTreeにフォーカス
+"正直<C_w>lが体に染み付いているので不要かも知れない
 
 nnoremap あ a
 nnoremap い i
@@ -111,3 +137,6 @@ nnoremap っｄ dd
 nnoremap ：ｗ :w
 nnoremap ：ｑ :q
 nnoremap ：ｑ！ :q!
+nnoremap <Up> g<Up>
+nnoremap <Down> g<Down>
+"日本語入力のままでも多少弄りやすいように
