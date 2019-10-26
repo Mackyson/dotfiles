@@ -44,7 +44,10 @@ Plug 'poppyschmo/deoplete-latex'
 "texの補完
 
 Plug 'fatih/vim-go'
-Plug 'zchee/deoplete-go'
+Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
+filetype plugin on
+Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
+let g:deoplete#sources#go#gocode_binary = '/home/mackyson/go/bin/gocode'
 "GoをIDEに
 
 Plug 'rust-lang/rust.vim'
@@ -55,6 +58,9 @@ Plug 'prettier/vim-prettier', {
 	\'do': 'yarn install',
 	\'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']}
 "JS用のコード整形
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+"TypeScriptのSystax highlight
 
 Plug 'elzr/vim-json'
 "jsonを見やすくする
@@ -139,4 +145,6 @@ nnoremap ：ｑ :q
 nnoremap ：ｑ！ :q!
 nnoremap <Up> g<Up>
 nnoremap <Down> g<Down>
+inoremap <Up> <nop>
+inoremap <Down> <nop>
 "日本語入力のままでも多少弄りやすいように
