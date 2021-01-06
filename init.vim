@@ -7,6 +7,7 @@ if has('vim_starting')
 		echo 'input ":PlugInstall" on your vim. '
 	end
 endif
+
 "vim/plugがないとき用，ほぼコピペ
 " TODO プラグイン周りを書き換えたあとは必ず:PlugInstallすること！
 
@@ -33,21 +34,24 @@ set statusline+=%{fugitive#statusline()}
 "なんかGitいろいろ触れるらしいけどブランチ表示したいだけ，
 "Git触るときはTigで．
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-let g:deoplete#enable_at_startup=1
-"コード補完
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/neosnippet-snippets'
+" let g:deoplete#enable_at_startup=1
+" "コード補完
 
 Plug 'lervag/vimtex'
 Plug 'poppyschmo/deoplete-latex'
 "texの補完
 
 Plug 'fatih/vim-go'
+Plug 'mattn/vim-goimports'
 Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 filetype plugin on
 Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 let g:deoplete#sources#go#gocode_binary = '/home/mackyson/go/bin/gocode'
+let g:go_fmt_command = "goimports"
+let g:go_highlight_fields = 1
 "GoをIDEに
 
 Plug 'rust-lang/rust.vim'
@@ -148,3 +152,7 @@ nnoremap <Down> g<Down>
 inoremap <Up> <nop>
 inoremap <Down> <nop>
 "日本語入力のままでも多少弄りやすいように
+
+nmap <F5> <ESC>i<C-r>=strftime("%H:%M")<CR><CR><ESC><K>
+imap <F5> <C-r>=strftime("%H:%M")<CR><CR>
+"F5で現在時刻を入力
